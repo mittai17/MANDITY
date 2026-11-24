@@ -1,7 +1,6 @@
-import { StyleSheet, View, Dimensions, ScrollView, RefreshControl } from 'react-native';
+import {StyleSheet, View, Dimensions, ScrollView, RefreshControl, TouchableOpacity} from 'react-native';
 import React, { useEffect, useState, useCallback } from 'react';
 import { useRouter } from 'expo-router';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import { ChevronRight, Bell, Calendar, TrendingUp, TrendingDown, MapPin, BarChart2, Mic } from 'lucide-react-native';
 import { colors, spacing, radius, typography, shadows, demoLabel, POPULAR_CROPS } from '../../constants/theme';
 import { t } from '../../localization';

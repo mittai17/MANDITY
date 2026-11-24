@@ -1,7 +1,6 @@
-import { StyleSheet, View, ScrollView, Dimensions } from 'react-native';
+import {StyleSheet, View, ScrollView, Dimensions, TouchableOpacity} from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'expo-router';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import { ChevronRight, Clock, CheckCircle, XCircle, ArrowRight } from 'lucide-react-native';
 import { colors, spacing, radius, typography, shadows } from '../constants/theme';
 import { t } from '../localization';

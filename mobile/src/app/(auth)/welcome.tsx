@@ -1,6 +1,5 @@
-import { StyleSheet, View, StatusBar, Text, ScrollView } from 'react-native';
+import {StyleSheet, View, StatusBar, Text, ScrollView, TouchableOpacity} from 'react-native';
 import React from 'react';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useRouter } from 'expo-router';
 import { useAuthStore } from '../../store';
 import { User, ArrowRight } from 'lucide-react-native';

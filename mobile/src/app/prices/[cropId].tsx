@@ -1,7 +1,6 @@
-import { StyleSheet, View, ScrollView, Dimensions, TextInput } from 'react-native';
+import {StyleSheet, View, ScrollView, Dimensions, TextInput, TouchableOpacity} from 'react-native';
 import React, { useEffect, useState, useCallback } from 'react';
 import { useRouter, useLocalSearchParams } from 'expo-router';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import { ChevronRight, Clock, TrendingUp, TrendingDown, Info } from 'lucide-react-native';
 import { LineChart } from 'react-native-chart-kit';
 import { colors, spacing, radius, typography, shadows, demoLabel, DEMO_MARKETS } from '../../constants/theme';

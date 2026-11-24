@@ -1,7 +1,6 @@
-import { StyleSheet, View, ScrollView, Dimensions, TextInput, KeyboardAvoidingView, Platform } from 'react-native';
+import {StyleSheet, View, ScrollView, Dimensions, TextInput, KeyboardAvoidingView, Platform, TouchableOpacity} from 'react-native';
 import React, { useEffect, useState, useCallback } from 'react';
 import { useRouter } from 'expo-router';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Search, Filter, ChevronRight } from 'lucide-react-native';
 import { colors, spacing, radius, typography, shadows, DEMO_MARKETS, POPULAR_CROPS } from '../../constants/theme';
 import { t } from '../../localization';

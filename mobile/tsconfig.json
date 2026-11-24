@@ -2,7 +2,10 @@
   "compilerOptions": {
     "target": "esnext",
     "module": "esnext",
-    "lib": ["esnext", "dom"],
+    "lib": [
+      "esnext",
+      "dom"
+    ],
     "allowJs": true,
     "checkJs": false,
     "jsx": "react-native",
@@ -12,8 +15,23 @@
     "strict": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "types": ["@types/react", "react-native"]
+    "types": [
+      "@types/react",
+      "react-native"
+    ]
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "App.tsx", "index.tsx"],
-  "exclude": ["node_modules", "dist", "build", "ios", "android"]
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "App.tsx",
+    "index.tsx"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "build",
+    "ios",
+    "android"
+  ],
+  "extends": "expo/tsconfig.base"
 }
