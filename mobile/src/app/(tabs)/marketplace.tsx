@@ -32,53 +32,8 @@ export default function MarketplaceScreen() {
   const loadListings = useCallback(async () => {
     setLoading(true);
     try {
-      await new Promise((r) => setTimeout(r, 400));
-      setListings([
-        {
-          id: '1',
-          crop: 'Tomato',
-          quantity: '500 kg',
-          price: '₹24/kg',
-          location: 'Chengalpattu, Tamil Nadu',
-          farmer: 'Ravi Kumar',
-          posted: '2 hours ago',
-          image_url: '',
-          verified: true,
-        },
-        {
-          id: '2',
-          crop: 'Onion',
-          quantity: '300 kg',
-          price: '₹30/kg',
-          location: 'Koyambedu, Chennai',
-          farmer: 'Lakshmi Devi',
-          posted: '5 hours ago',
-          image_url: '',
-          verified: false,
-        },
-        {
-          id: '3',
-          crop: 'Paddy',
-          quantity: '20 quintals',
-          price: '₹2,300/quintal',
-          location: 'Tiruvallur, Tamil Nadu',
-          farmer: 'Arun Prakash',
-          posted: '1 day ago',
-          image_url: '',
-          verified: true,
-        },
-        {
-          id: '4',
-          crop: 'Banana',
-          quantity: '200 kg',
-          price: '₹35/kg',
-          location: 'Chengalpattu, Tamil Nadu',
-          farmer: 'Sita Ramesh',
-          posted: '2 days ago',
-          image_url: '',
-          verified: false,
-        },
-      ]);
+      const data = await api.getListings();
+      setListings(data);
     } catch (e) {
       console.error('Failed to load listings', e);
     } finally {

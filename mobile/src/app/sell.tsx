@@ -1,4 +1,4 @@
-import {StyleSheet, View, ScrollView, Dimensions, TextInput, KeyboardAvoidingView, Platform, Image as RnImage, TouchableOpacity} from 'react-native';
+import {StyleSheet, View, ScrollView, Dimensions, TextInput, KeyboardAvoidingView, Platform, Image as RnImage, TouchableOpacity, Alert} from 'react-native';
 import React, { useState, useCallback } from 'react';
 import { useRouter } from 'expo-router';
 import { ChevronRight, X, Plus, Camera, MapPin } from 'lucide-react-native';
@@ -7,6 +7,7 @@ import { getCropImageSource } from '../constants/images';
 import { t } from '../localization';
 import { Card, Button, Text, Heading, Caption, DemoLabel as DemoBadge } from '../components/ui';
 import { useAuthStore } from '../store';
+import { api } from '../services/api';
 import * as ImagePicker from 'expo-image-picker';
 
 const { width } = Dimensions.get('window');
@@ -53,11 +54,26 @@ export default function SellScreen() {
     setImages(images.filter((_, i) => i !== index));
   };
 
-  const handleNext = () => {
+  const handleNext = async () => {
     if (stepIndex < STEPS.length - 1) {
       setStepIndex((s) => s + 1);
     } else {
-      router.replace('/(tabs)');
+      await api.createProduceListing({
+        crop,
+        quantity: quantity || '100',
+        unit,
+        price: price || '24',
+        location: location || user?.district || 'Chengalpattu, Tamil Nadu',
+        description: description || 'Fresh farm harvested produce.',
+        farmer: user?.full_name || 'You (Farmer)',
+      });
+      Alert.alert(
+        'Produce Published!',
+        `Your ${crop} listing (${quantity || '100'} ${unit} at ₹${price || '24'}/${unit}) is now live on the marketplace. Buyers can discover it and send purchase inquiries.`,
+        [
+          { text: 'View Marketplace', onPress: () => router.replace('/(tabs)/marketplace') },
+        ]
+      );
     }
   };
 

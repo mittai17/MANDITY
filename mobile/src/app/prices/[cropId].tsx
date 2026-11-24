@@ -1,7 +1,7 @@
-import {StyleSheet, View, ScrollView, Dimensions, TextInput, TouchableOpacity, Image} from 'react-native';
+import {StyleSheet, View, ScrollView, Dimensions, TextInput, TouchableOpacity, Image, Modal, Alert} from 'react-native';
 import React, { useEffect, useState, useCallback } from 'react';
 import { useRouter, useLocalSearchParams } from 'expo-router';
-import { ChevronRight, Clock, TrendingUp, TrendingDown, Info } from 'lucide-react-native';
+import { ChevronRight, Clock, TrendingUp, TrendingDown, Info, Bell, Calculator, X, Check } from 'lucide-react-native';
 import { LineChart } from 'react-native-chart-kit';
 import { colors, spacing, radius, typography, shadows, demoLabel, DEMO_MARKETS } from '../../constants/theme';
 import { getCropImageSource } from '../../constants/images';
@@ -22,6 +22,25 @@ export default function PriceDetailsScreen() {
   const [selectedMarket, setSelectedMarket] = useState<Market | null>(null);
   const [timeRange, setTimeRange] = useState<'7d' | '30d' | '90d' | '1y'>('30d');
   const [loading, setLoading] = useState(true);
+  const [alertModalVisible, setAlertModalVisible] = useState(false);
+  const [targetPrice, setTargetPrice] = useState('28');
+  const [alertSaved, setAlertSaved] = useState(false);
+
+  const handleSaveAlert = async () => {
+    const p = parseFloat(targetPrice);
+    if (!p) {
+      Alert.alert('Error', 'Please enter a valid price.');
+      return;
+    }
+    await api.createPriceAlert({ crop_id: cropId, target_price: p });
+    setAlertSaved(true);
+    setAlertModalVisible(false);
+    Alert.alert(
+      'Price Alert Created!',
+      `You will receive an alert when ${cropId} reaches ₹${p}/kg in ${selectedMarket?.name || 'Chengalpattu'}.`,
+      [{ text: 'View Notifications', onPress: () => router.push('/notifications') }, { text: 'OK' }]
+    );
+  };
 
   const cropId = params.cropId || 'tomato';
 
@@ -106,6 +125,29 @@ export default function PriceDetailsScreen() {
               <Info size={14} color={colors.secondaryText} />
               <Caption>Source: {current?.source || 'AGMARKNET'} • {t('last_updated', language)}: {current?.fetched_at ? new Date(current.fetched_at).toLocaleDateString() : 'Just now'}</Caption>
             </View>
+          </View>
+
+          {/* Price Quick Actions */}
+          <View style={styles.priceActionsRow}>
+            <TouchableOpacity
+              style={styles.priceActionBtn}
+              onPress={() => setAlertModalVisible(true)}
+              activeOpacity={0.8}
+            >
+              <Bell size={18} color={alertSaved ? colors.success : colors.primary} />
+              <Text style={styles.priceActionText}>
+                {alertSaved ? 'Alert Active' : 'Set Price Alert'}
+              </Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.priceActionBtn}
+              onPress={() => router.push('/comparison')}
+              activeOpacity={0.8}
+            >
+              <Calculator size={18} color={colors.primary} />
+              <Text style={styles.priceActionText}>Calculate Net Proceeds</Text>
+            </TouchableOpacity>
           </View>
 
           <View style={styles.section}>
@@ -193,6 +235,41 @@ export default function PriceDetailsScreen() {
           </View>
         </>
       )}
+
+      {/* Set Price Alert Modal */}
+      <Modal
+        visible={alertModalVisible}
+        transparent
+        animationType="slide"
+        onRequestClose={() => setAlertModalVisible(false)}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalSheet}>
+            <View style={styles.modalHeader}>
+              <Heading style={styles.modalTitle}>Set Price Alert</Heading>
+              <TouchableOpacity onPress={() => setAlertModalVisible(false)}>
+                <X size={20} color={colors.secondaryText} />
+              </TouchableOpacity>
+            </View>
+            <Caption>
+              Get notified immediately when {cropId} market price touches or exceeds your target rate.
+            </Caption>
+            <View style={styles.modalInputGroup}>
+              <Caption>Target Price (₹/kg)</Caption>
+              <TextInput
+                style={styles.modalInput}
+                value={targetPrice}
+                onChangeText={setTargetPrice}
+                keyboardType="numeric"
+                placeholder="e.g. 28"
+              />
+            </View>
+            <Button onPress={handleSaveAlert} fullWidth>
+              Save Alert
+            </Button>
+          </View>
+        </View>
+      </Modal>
     </ScrollView>
   );
 }
@@ -238,6 +315,67 @@ const styles = StyleSheet.create({
     padding: spacing.xl,
     marginHorizontal: spacing.lg,
     ...shadows.md,
+  },
+  priceActionsRow: {
+    flexDirection: 'row',
+    gap: spacing.md,
+    marginHorizontal: spacing.lg,
+    marginTop: spacing.md,
+  },
+  priceActionBtn: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: spacing.xs,
+    backgroundColor: colors.white,
+    paddingVertical: spacing.md,
+    paddingHorizontal: spacing.sm,
+    borderRadius: radius.lg,
+    borderWidth: 1,
+    borderColor: colors.border,
+    ...shadows.sm,
+  },
+  priceActionText: {
+    color: colors.primaryDark,
+    fontSize: typography.fontSize.xs,
+    fontFamily: typography.fontBold,
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    justifyContent: 'flex-end',
+  },
+  modalSheet: {
+    backgroundColor: colors.white,
+    borderTopLeftRadius: radius.xl,
+    borderTopRightRadius: radius.xl,
+    padding: spacing.xl,
+    gap: spacing.md,
+  },
+  modalHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  modalTitle: {
+    color: colors.primaryDark,
+    fontSize: typography.fontSize.lg,
+    fontFamily: typography.fontBold,
+  },
+  modalInputGroup: {
+    gap: 4,
+  },
+  modalInput: {
+    backgroundColor: colors.ivory,
+    borderWidth: 1,
+    borderColor: colors.border,
+    borderRadius: radius.md,
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.sm,
+    fontSize: typography.fontSize.lg,
+    color: colors.primaryText,
+    fontFamily: typography.fontBold,
   },
   priceHeader: { marginBottom: spacing.lg },
   marketSelect: {

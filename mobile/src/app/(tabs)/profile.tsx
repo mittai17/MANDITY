@@ -83,19 +83,19 @@ export default function ProfileScreen() {
           <ArrowRight size={18} color={colors.secondaryText} />
         </View>
         <View style={styles.settingsList}>
-          <TouchableOpacity activeOpacity={0.8} style={styles.settingsItem}>
+          <TouchableOpacity activeOpacity={0.8} style={styles.settingsItem} onPress={() => router.push('/legal/privacy')}>
             <Text style={styles.settingsLabel}>{t('privacy', 'en')}</Text>
             <ArrowRight size={16} color={colors.secondaryText} />
           </TouchableOpacity>
-          <TouchableOpacity activeOpacity={0.8} style={styles.settingsItem}>
+          <TouchableOpacity activeOpacity={0.8} style={styles.settingsItem} onPress={() => router.push('/legal/terms')}>
             <Text style={styles.settingsLabel}>{t('terms', 'en')}</Text>
             <ArrowRight size={16} color={colors.secondaryText} />
           </TouchableOpacity>
-          <TouchableOpacity activeOpacity={0.8} style={styles.settingsItem}>
+          <TouchableOpacity activeOpacity={0.8} style={styles.settingsItem} onPress={() => router.push('/legal/help')}>
             <Text style={styles.settingsLabel}>{t('help', 'en')}</Text>
             <ArrowRight size={16} color={colors.secondaryText} />
           </TouchableOpacity>
-          <TouchableOpacity activeOpacity={0.8} style={styles.settingsItem}>
+          <TouchableOpacity activeOpacity={0.8} style={styles.settingsItem} onPress={() => router.push('/legal/about')}>
             <Text style={styles.settingsLabel}>{t('about', 'en')}</Text>
             <ArrowRight size={16} color={colors.secondaryText} />
           </TouchableOpacity>

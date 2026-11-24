@@ -53,7 +53,7 @@ export default function SettingsScreen() {
           label="Privacy"
           value=""
           icon={<Shield size={20} color={colors.primary} />}
-          onPress={() => {}}
+          onPress={() => router.push('/legal/privacy')}
         />
       </View>
 
@@ -62,19 +62,19 @@ export default function SettingsScreen() {
           label={t('help', 'en')}
           value=""
           icon={<Info size={20} color={colors.primary} />}
-          onPress={() => {}}
+          onPress={() => router.push('/legal/help')}
         />
         <SettingsRow
           label={t('about', 'en')}
           value=""
           icon={<Info size={20} color={colors.primary} />}
-          onPress={() => {}}
+          onPress={() => router.push('/legal/about')}
         />
         <SettingsRow
           label={t('terms', 'en')}
           value=""
           icon={<Info size={20} color={colors.primary} />}
-          onPress={() => {}}
+          onPress={() => router.push('/legal/terms')}
         />
         <SettingsRow
           label={t('logout', 'en')}

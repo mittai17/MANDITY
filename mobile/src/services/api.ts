@@ -61,6 +61,57 @@ let demoInquiries: (BuyerInquiry & { crop_name?: string; seller_name?: string; b
   },
 ];
 
+let demoListings: any[] = [
+  {
+    id: '1',
+    crop: 'Tomato',
+    quantity: '500 kg',
+    price: '₹24/kg',
+    location: 'Chengalpattu, Tamil Nadu',
+    farmer: 'Ravi Kumar',
+    posted: '2 hours ago',
+    image_url: '',
+    verified: true,
+  },
+  {
+    id: '2',
+    crop: 'Onion',
+    quantity: '300 kg',
+    price: '₹30/kg',
+    location: 'Koyambedu, Chennai',
+    farmer: 'Lakshmi Devi',
+    posted: '5 hours ago',
+    image_url: '',
+    verified: false,
+  },
+  {
+    id: '3',
+    crop: 'Paddy',
+    quantity: '20 quintals',
+    price: '₹2,300/quintal',
+    location: 'Tiruvallur, Tamil Nadu',
+    farmer: 'Arun Prakash',
+    posted: '1 day ago',
+    image_url: '',
+    verified: true,
+  },
+  {
+    id: '4',
+    crop: 'Banana',
+    quantity: '200 kg',
+    price: '₹35/kg',
+    location: 'Chengalpattu, Tamil Nadu',
+    farmer: 'Sita Ramesh',
+    posted: '2 days ago',
+    image_url: '',
+    verified: false,
+  },
+];
+
+let demoPriceAlerts: { id: string; crop_id: string; target_price: number; created_at: string }[] = [
+  { id: 'pa-1', crop_id: 'tomato', target_price: 28, created_at: new Date().toISOString() },
+];
+
 let demoNotifications: NotificationItem[] = [
   {
     id: 'notif-1',
@@ -366,6 +417,67 @@ export const api = {
 
   isListingSaved(id: string): boolean {
     return savedListingIds.has(id);
+  },
+
+  // Produce Listings
+  async getListings(): Promise<any[]> {
+    await DELAY(150);
+    return [...demoListings];
+  },
+
+  async createProduceListing(data: {
+    crop: string;
+    quantity: string;
+    unit: string;
+    price: string;
+    location: string;
+    description: string;
+    farmer?: string;
+  }): Promise<any> {
+    await DELAY(250);
+    const newListing = {
+      id: String(Date.now()),
+      crop: data.crop,
+      quantity: `${data.quantity} ${data.unit}`,
+      price: `₹${data.price}/${data.unit}`,
+      location: data.location || 'Chengalpattu, Tamil Nadu',
+      farmer: data.farmer || 'You (Farmer)',
+      posted: 'Just now',
+      image_url: '',
+      verified: true,
+      description: data.description || 'Fresh harvest produce.',
+    };
+    demoListings.unshift(newListing);
+    return newListing;
+  },
+
+  // Price Alerts
+  async getPriceAlerts() {
+    await DELAY(150);
+    return [...demoPriceAlerts];
+  },
+
+  async createPriceAlert(data: { crop_id: string; target_price: number }) {
+    await DELAY(200);
+    const newAlert = {
+      id: String(Date.now()),
+      crop_id: data.crop_id,
+      target_price: data.target_price,
+      created_at: new Date().toISOString(),
+    };
+    demoPriceAlerts.push(newAlert);
+
+    // Also add to in-app notifications
+    demoNotifications.unshift({
+      id: `alert-${Date.now()}`,
+      user_id: 'user-demo',
+      title: `Price Alert Set for ${data.crop_id.toUpperCase()}`,
+      body: `You will be notified when ${data.crop_id} modal price reaches ₹${data.target_price}/kg.`,
+      type: 'price_alert',
+      created_at: new Date().toISOString(),
+    });
+
+    return newAlert;
   },
 };
 
