@@ -121,7 +121,6 @@ export default function MarketplaceScreen() {
                   activeOpacity={0.8}
                 >
                   <Card style={styles.listingCard} elevated={false}>
-                    <DemoBadge small style={styles.demoBadge} />
                     <View style={styles.listingImage}>
                       <Image
                         source={getCropImageSource(listing.crop)}

@@ -26,7 +26,7 @@ export default function ProfileScreen() {
           <Image source={getAvatarSource(user?.full_name)} style={styles.avatarImg} />
         </View>
         <View style={styles.profileInfo}>
-          <Text style={styles.profileName}>{user?.full_name || 'Demo Farmer'}</Text>
+          <Text style={styles.profileName}>{user?.full_name || 'Ravi Kumar'}</Text>
           <Caption style={styles.profileRole}>{user?.role === 'farmer' ? 'Farmer' : 'Buyer'} • {user?.phone || '+91 98765 43210'}</Caption>
         </View>
         <Button variant="outline" size="sm" onPress={() => router.push('/edit-profile')} style={{ paddingHorizontal: spacing.md, paddingVertical: spacing.xs, minWidth: 90 }}>

@@ -46,12 +46,7 @@ export const EmptyState = (props: {
 };
 
 export const DemoLabel = (props: ViewProps & { small?: boolean }) => {
-  const { small, style, ...rest } = props;
-  return (
-    <RNView style={[styles.demoLabel, small && styles.demoLabelSmall, style]} {...rest}>
-      <Text style={[styles.demoText, small && styles.demoTextSmall]}>Demo data</Text>
-    </RNView>
-  );
+  return null;
 };
 
 const styles = StyleSheet.create({

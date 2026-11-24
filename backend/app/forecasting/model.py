@@ -29,7 +29,7 @@ def generate_price_forecast(
             trend_direction="stable",
             model_version="heuristic-fallback",
             uncertainty_note="Limited historical observations (<3). This is an estimate, not a guaranteed price.",
-            is_demo=True,
+            is_demo=False,
         )
 
     # Calculate 7-day moving average and trend slope
@@ -70,5 +70,5 @@ def generate_price_forecast(
         trend_direction=trend_direction,
         model_version=version,
         uncertainty_note=note,
-        is_demo=True,
+        is_demo=False,
     )

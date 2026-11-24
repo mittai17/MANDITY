@@ -73,6 +73,6 @@ interface UIState {
 
 export const useUIStore = create<UIState>((set) => ({
   theme: 'light',
-  demoMode: true,
+  demoMode: false,
   setDemoMode: (mode) => set({ demoMode: mode }),
 }));

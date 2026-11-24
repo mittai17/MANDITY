@@ -15,13 +15,13 @@ export default function OTPScreen() {
   const handleVerify = () => {
     if (code.length < 6) return;
     login({
-      id: 'demo-user-1',
-      full_name: 'Demo Farmer',
+      id: 'user-01',
+      full_name: 'Ravi Kumar',
       phone: '+91 98765 43210',
       role: 'farmer',
       preferred_language: language,
       district: 'Chengalpattu',
-      village: 'Demo Village',
+      village: 'Maduranthakam',
       created_at: new Date().toISOString(),
     });
     router.replace('/(tabs)');

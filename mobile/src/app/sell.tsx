@@ -240,8 +240,6 @@ export default function SellScreen() {
           )}
         </View>
 
-        <DemoBadge small style={styles.demoBadge} />
-
         <View style={styles.actions}>
           {stepIndex > 0 && (
             <Button variant="outline" onPress={handleBack} style={{ flex: 1 }}>

@@ -65,7 +65,7 @@ export default function InquiriesScreen() {
           <ChevronLeft size={22} color={colors.primaryText} />
         </TouchableOpacity>
         <Heading style={styles.title}>{t('my_inquiries', 'en')}</Heading>
-        <DemoBadge small />
+        <View style={{ width: 40 }} />
       </View>
       <Caption style={styles.subtitle}>Track your buyer & farmer purchase inquiries</Caption>
 

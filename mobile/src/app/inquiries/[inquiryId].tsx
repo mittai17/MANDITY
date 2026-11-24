@@ -99,7 +99,7 @@ export default function InquiryDetailScreen() {
           <ChevronLeft size={22} color={colors.primaryText} />
         </TouchableOpacity>
         <Heading style={styles.title}>Inquiry #{inquiry.id}</Heading>
-        <DemoBadge small />
+        <View style={{ width: 40 }} />
       </View>
 
       {/* Status Banner */}

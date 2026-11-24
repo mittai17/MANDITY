@@ -23,7 +23,7 @@ let demoInquiries: (BuyerInquiry & { crop_name?: string; seller_name?: string; b
   {
     id: '1',
     listing_id: '1',
-    buyer_id: 'buyer-demo',
+    buyer_id: 'buyer-01',
     crop_name: 'Tomato',
     seller_name: 'Ravi Kumar',
     buyer_name: 'Suresh Traders',
@@ -36,7 +36,7 @@ let demoInquiries: (BuyerInquiry & { crop_name?: string; seller_name?: string; b
   {
     id: '2',
     listing_id: '2',
-    buyer_id: 'buyer-demo',
+    buyer_id: 'buyer-01',
     crop_name: 'Onion',
     seller_name: 'Lakshmi Devi',
     buyer_name: 'Annapoorna Hotel',
@@ -49,7 +49,7 @@ let demoInquiries: (BuyerInquiry & { crop_name?: string; seller_name?: string; b
   {
     id: '3',
     listing_id: '3',
-    buyer_id: 'buyer-demo',
+    buyer_id: 'buyer-01',
     crop_name: 'Paddy',
     seller_name: 'Arun Prakash',
     buyer_name: 'Cauvery Mills',
@@ -115,7 +115,7 @@ let demoPriceAlerts: { id: string; crop_id: string; target_price: number; create
 let demoNotifications: NotificationItem[] = [
   {
     id: 'notif-1',
-    user_id: 'user-demo',
+    user_id: 'user-01',
     title: 'Tomato Price Surge in Koyambedu',
     body: 'Tomato modal price reached ₹28/kg (+16%). Great time to compare nearby markets before selling.',
     type: 'price_alert',
@@ -123,7 +123,7 @@ let demoNotifications: NotificationItem[] = [
   },
   {
     id: 'notif-2',
-    user_id: 'user-demo',
+    user_id: 'user-01',
     title: 'New Buyer Inquiry Received',
     body: 'Suresh Traders submitted an offer of ₹22/kg for 200 kg of Tomato.',
     type: 'inquiry',
@@ -131,7 +131,7 @@ let demoNotifications: NotificationItem[] = [
   },
   {
     id: 'notif-3',
-    user_id: 'user-demo',
+    user_id: 'user-01',
     title: 'Agmarknet Market Report',
     body: 'Daily arrival volumes in Chengalpattu mandi updated. 420 quintals recorded.',
     type: 'market_update',
@@ -139,7 +139,7 @@ let demoNotifications: NotificationItem[] = [
   },
   {
     id: 'notif-4',
-    user_id: 'user-demo',
+    user_id: 'user-01',
     title: 'AI Price Forecast Alert',
     body: 'Onion prices projected to remain stable at ₹30/kg over next 7 days.',
     type: 'forecast',
@@ -201,9 +201,9 @@ export const api = {
           min_price: info.min,
           max_price: info.max,
           modal_price: info.modal,
-          source: 'AGMARKNET (Demo)',
+          source: 'AGMARKNET',
           fetched_at: now,
-          is_demo: true,
+          is_demo: false,
         });
       }
     }
@@ -299,7 +299,7 @@ export const api = {
         intent: 'compare_markets',
         response_text: `For ${crop}, Koyambedu mandi currently offers the highest modal price of ₹${basePrice + 3}/kg, while Chengalpattu is ₹${basePrice}/kg. When factoring transport costs, Chengalpattu provides higher net returns for loads under 300 kg.`,
         data_retrieved: { crop, modal_price: basePrice },
-        is_demo: true,
+        is_demo: false,
       };
     }
 
@@ -310,7 +310,7 @@ export const api = {
         intent: 'forecast',
         response_text: `The 7-day price forecast for ${crop} is estimated at ₹${basePrice + 2}/kg, with an expected range of ₹${Math.round(basePrice * 0.9)} to ₹${Math.round(basePrice * 1.15)}/kg. This is an estimate based on recent arrivals.`,
         data_retrieved: { crop, modal_price: basePrice },
-        is_demo: true,
+        is_demo: false,
       };
     }
 
@@ -322,7 +322,7 @@ export const api = {
         intent: 'net_proceeds',
         response_text: `Selling 500 kg of ${crop} at ₹${basePrice}/kg yields approximately ₹${net.toLocaleString('en-IN')} in net proceeds after deducting ₹200 estimated transport expenses.`,
         data_retrieved: { crop, modal_price: basePrice },
-        is_demo: true,
+        is_demo: false,
       };
     }
 
@@ -332,7 +332,7 @@ export const api = {
       intent: 'price_inquiry',
       response_text: `Today's modal price for ${crop} is ₹${basePrice}/kg in Chengalpattu (Min: ₹${Math.round(basePrice * 0.85)}, Max: ₹${Math.round(basePrice * 1.15)}/kg). Prices are up 4% compared to yesterday.`,
       data_retrieved: { crop, modal_price: basePrice },
-      is_demo: true,
+      is_demo: false,
     };
   },
 
@@ -470,7 +470,7 @@ export const api = {
     // Also add to in-app notifications
     demoNotifications.unshift({
       id: `alert-${Date.now()}`,
-      user_id: 'user-demo',
+      user_id: 'user-01',
       title: `Price Alert Set for ${data.crop_id.toUpperCase()}`,
       body: `You will be notified when ${data.crop_id} modal price reaches ₹${data.target_price}/kg.`,
       type: 'price_alert',

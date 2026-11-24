@@ -132,8 +132,6 @@ export default function ListingDetailScreen() {
           />
         </View>
 
-        <DemoBadge small style={styles.demoBadge} />
-
         <View style={styles.content}>
           <View style={styles.titleRow}>
             <Text style={styles.listingTitle}>{listing.crop}</Text>

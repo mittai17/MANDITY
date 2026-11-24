@@ -138,11 +138,6 @@ export default function ComparisonScreen() {
         keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}
       >
-        {/* Demo label */}
-        <View style={styles.demoRow}>
-          <DemoLabel small />
-        </View>
-
         {/* ── Crop Selector ─────────────────────────────────────── */}
         <RNText style={styles.sectionTitle}>Select Crop</RNText>
         <ScrollView

@@ -91,7 +91,6 @@ export default function PricesScreen() {
                   activeOpacity={0.8}
                 >
                   <Card style={[styles.cropCard, isSelected && styles.cropCardActive]} elevated={false}>
-                    <DemoBadge small style={styles.demoBadge} />
                     <Image source={getCropImageSource(crop.id)} style={styles.cropThumb} resizeMode="cover" />
                     <Text style={[styles.cropName, isSelected && styles.cropNameActive]}>{crop.name}</Text>
                     <Caption style={[styles.cropCategory, isSelected && styles.cropCategoryActive]}>

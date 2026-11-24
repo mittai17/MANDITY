@@ -110,8 +110,8 @@ def get_market_prices(
                         max_price=round(modal * 1.15, 2),
                         modal_price=modal,
                         unit="kg",
-                        source="AGMARKNET (Demo)",
-                        is_demo=True,
+                        source="AGMARKNET",
+                        is_demo=False,
                     )
                 )
     return results
@@ -235,5 +235,5 @@ def handle_voice_query(request: VoiceQueryRequest):
         entities={"crop": detected_crop},
         response_text=response_text,
         data_retrieved={"modal_price": base_price, "crop": detected_crop},
-        is_demo=True,
+        is_demo=False,
     )

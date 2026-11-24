@@ -182,18 +182,11 @@ export default function ConversationScreen() {
           <RNText style={styles.headerName} numberOfLines={1}>
             {displayName}
           </RNText>
-          <RNText style={styles.headerCaption}>Demo</RNText>
+          <RNText style={styles.headerCaption}>Online</RNText>
         </View>
 
         {/* Spacer to balance back button */}
         <View style={styles.headerSpacer} />
-      </View>
-
-      {/* ── Demo Notice Bar ── */}
-      <View style={styles.noticeBar}>
-        <RNText style={styles.noticeText} numberOfLines={1}>
-          Demo conversation — messages are not saved to server
-        </RNText>
       </View>
 
       {/* ── Messages + Input (KeyboardAvoidingView wraps both) ── */}

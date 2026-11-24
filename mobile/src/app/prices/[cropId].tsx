@@ -87,7 +87,7 @@ export default function PriceDetailsScreen() {
           <Image source={getCropImageSource(cropId)} style={styles.cropTitleThumb} />
           <Heading style={styles.title}>{cropId.charAt(0).toUpperCase() + cropId.slice(1)} Price</Heading>
         </View>
-        <DemoBadge small style={styles.demoBadge} />
+        <View style={{ width: 40 }} />
       </View>
 
       {loading ? (
@@ -186,7 +186,6 @@ export default function PriceDetailsScreen() {
           <View style={styles.section}>
             <View style={styles.sectionRow}>
               <Heading style={styles.sectionTitle}>Forecast</Heading>
-              <DemoBadge small />
             </View>
             <Card style={styles.forecastCard} elevated={false}>
               <View style={styles.forecastRow}>

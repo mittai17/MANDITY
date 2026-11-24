@@ -62,7 +62,7 @@ export default function AIScreen() {
     {
       id: 'init-1',
       sender: 'assistant',
-      text: `Vanakkam ${user?.full_name || 'Farmer'}! I am Mandity AI, your multilingual mandi assistant. You can speak or type to check today's prices, compare nearby markets, forecast trends, or calculate net earnings.`,
+      text: `Vanakkam ${user?.full_name || 'Ravi Kumar'}! I am Mandity AI, your multilingual mandi assistant. You can speak or type to check today's prices, compare nearby markets, forecast trends, or calculate net earnings.`,
       time: 'Just now',
       intent: 'welcome',
     },
@@ -198,7 +198,6 @@ export default function AIScreen() {
             <Caption style={styles.subtitle}>Voice Market Intelligence</Caption>
           </View>
         </View>
-        <DemoBadge small />
       </View>
 
       {/* Language Selector */}

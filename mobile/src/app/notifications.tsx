@@ -144,8 +144,6 @@ export default function NotificationsScreen() {
         </ScrollView>
       </View>
 
-      <DemoBadge small style={styles.demoBadge} />
-
       {/* List */}
       <ScrollView
         showsVerticalScrollIndicator={false}

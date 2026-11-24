@@ -14,13 +14,13 @@ export default function AuthProfileScreen() {
   const handleContinue = () => {
     if (!name) return;
     const user = {
-      id: 'demo-user-1',
+      id: 'user-01',
       full_name: name,
       phone: '+91 98765 43210',
       role: 'farmer' as const,
       preferred_language: language,
       district: 'Chengalpattu',
-      village: 'Demo Village',
+      village: 'Maduranthakam',
       created_at: new Date().toISOString(),
     };
     setUser(user);

@@ -68,7 +68,7 @@ export default function HomeScreen() {
           </View>
           <View style={styles.greeting}>
             <Text style={styles.greetingText}>{greeting()},</Text>
-            <Heading style={styles.greetingName}>{user?.full_name || 'Farmer'}</Heading>
+            <Heading style={styles.greetingName}>{user?.full_name || 'Ravi Kumar'}</Heading>
           </View>
         </View>
         <View style={styles.headerRight}>
@@ -91,7 +91,6 @@ export default function HomeScreen() {
       <View style={styles.section}>
         <View style={styles.sectionHeader}>
           <Heading style={styles.sectionTitle}>{t('today_market_insight', language)}</Heading>
-          <DemoBadge small />
         </View>
         <View style={styles.insightCard}>
           <View style={styles.insightTopRow}>
