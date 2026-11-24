@@ -1,7 +1,7 @@
 import {StyleSheet, View, ScrollView, Dimensions, TextInput, KeyboardAvoidingView, Platform, TouchableOpacity, Image} from 'react-native';
 import React, { useEffect, useState, useCallback } from 'react';
 import { useRouter } from 'expo-router';
-import { Search, Filter, Plus, MapPin, SlidersHorizontal } from 'lucide-react-native';
+import { Search, Filter, Plus, MapPin, SlidersHorizontal, Heart, Bookmark } from 'lucide-react-native';
 import { colors, spacing, radius, typography, shadows, CROP_CATEGORIES, DEMO_MARKETS } from '../../constants/theme';
 import { getCropImageSource, getAvatarSource } from '../../constants/images';
 import { t } from '../../localization';
@@ -16,6 +16,18 @@ export default function MarketplaceScreen() {
   const [listings, setListings] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState<string>('All');
+  const [savedIds, setSavedIds] = useState<string[]>([]);
+
+  useEffect(() => {
+    setSavedIds(api.getSavedListingIds());
+  }, []);
+
+  const handleToggleSave = (id: string, e: any) => {
+    e.stopPropagation?.();
+    api.toggleSavedListing(id);
+    setSavedIds(api.getSavedListingIds());
+  };
 
   const loadListings = useCallback(async () => {
     setLoading(true);
@@ -78,9 +90,16 @@ export default function MarketplaceScreen() {
     loadListings();
   }, [loadListings]);
 
-  const filtered = listings.filter((l) =>
-    l.crop.toLowerCase().includes(search.toLowerCase())
-  );
+  const filtered = listings.filter((l) => {
+    const matchesSearch = l.crop.toLowerCase().includes(search.toLowerCase());
+    if (selectedCategory === 'Saved') {
+      return matchesSearch && savedIds.includes(l.id);
+    }
+    if (selectedCategory === 'All') {
+      return matchesSearch;
+    }
+    return matchesSearch;
+  });
 
   return (
     <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={styles.container}>
@@ -104,13 +123,23 @@ export default function MarketplaceScreen() {
           </View>
         </View>
 
-        <View style={styles.categories}>
-          {CROP_CATEGORIES.map((cat) => (
-            <TouchableOpacity key={cat} style={styles.categoryChip} onPress={() => setSearch(cat)}>
-              <Text style={styles.categoryLabel}>{cat}</Text>
-            </TouchableOpacity>
-          ))}
-        </View>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.categories}>
+          {['All', 'Saved', ...CROP_CATEGORIES].map((cat) => {
+            const active = selectedCategory === cat;
+            return (
+              <TouchableOpacity
+                key={cat}
+                style={[styles.categoryChip, active && styles.categoryChipActive]}
+                onPress={() => setSelectedCategory(cat)}
+                activeOpacity={0.8}
+              >
+                <Text style={[styles.categoryLabel, active && styles.categoryLabelActive]}>
+                  {cat === 'Saved' ? '♥ Saved' : cat}
+                </Text>
+              </TouchableOpacity>
+            );
+          })}
+        </ScrollView>
 
         <View style={styles.actionsRow}>
           <Button variant="outline" fullWidth onPress={() => router.push('/sell')}>
@@ -144,6 +173,17 @@ export default function MarketplaceScreen() {
                         style={styles.listingImageCover}
                         resizeMode="cover"
                       />
+                      <TouchableOpacity
+                        style={styles.heartBtn}
+                        onPress={(e) => handleToggleSave(listing.id, e)}
+                        activeOpacity={0.8}
+                      >
+                        <Heart
+                          size={16}
+                          color={savedIds.includes(listing.id) ? colors.error : colors.white}
+                          fill={savedIds.includes(listing.id) ? colors.error : 'transparent'}
+                        />
+                      </TouchableOpacity>
                     </View>
                     <View style={styles.listingInfo}>
                       <Text style={styles.listingCrop}>{listing.crop}</Text>
@@ -226,6 +266,22 @@ const styles = StyleSheet.create({
     color: colors.primaryText,
     fontSize: typography.fontSize.sm,
     fontFamily: typography.fontMedium,
+  },
+  categoryChipActive: {
+    backgroundColor: colors.primary,
+    borderColor: colors.primary,
+  },
+  categoryLabelActive: {
+    color: colors.white,
+    fontFamily: typography.fontBold,
+  },
+  heartBtn: {
+    position: 'absolute',
+    top: 6,
+    right: 6,
+    backgroundColor: 'rgba(0,0,0,0.4)',
+    borderRadius: radius.round,
+    padding: 4,
   },
   actionsRow: { paddingHorizontal: spacing.lg, marginBottom: spacing.lg },
   section: { paddingHorizontal: spacing.lg, marginBottom: spacing.lg },

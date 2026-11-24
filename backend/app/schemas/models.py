@@ -1,5 +1,5 @@
 from pydantic import BaseModel, Field
-from typing import Optional, List, Dict
+from typing import Optional, List, Dict, Any
 from datetime import date, datetime
 
 class CropSchema(BaseModel):
@@ -72,5 +72,5 @@ class VoiceQueryResponse(BaseModel):
     intent: str
     entities: Dict[str, str] = {}
     response_text: str
-    data_retrieved: Optional[Dict[str, float]] = None
+    data_retrieved: Optional[Dict[str, Any]] = None
     is_demo: bool = True
