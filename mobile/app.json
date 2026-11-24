@@ -1,0 +1,80 @@
+{
+  "expo": {
+    "name": "Mandity",
+    "slug": "mandity",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#174B37"
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.mandity.app"
+    },
+    "android": {
+      "package": "com.mandity.app",
+      "adaptiveIcon": {
+        "backgroundColor": "#174B37",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      },
+      "permissions": [
+        "CAMERA",
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE",
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION",
+        "RECORD_AUDIO",
+        "MODIFY_AUDIO_SETTINGS"
+      ]
+    },
+    "web": {
+      "favicon": "./assets/favicon.png",
+      "output": "static"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-speech-recognition",
+      "expo-secure-store",
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/icon.png",
+          "color": "#174B37",
+          "mode": "production",
+          "permissions": ["NOTIFICATIONS"]
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Mandity needs access to your photos to upload produce images."
+        }
+      ],
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Mandity uses your location to show nearby mandi prices and markets."
+        }
+      ],
+      [
+        "expo-speech-recognition",
+        {
+          "microphonePermission": "Mandity needs microphone access for voice assistant."
+        }
+      ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "mandity"
+      }
+    },
+    "owner": "mittai"
+  }
+}
