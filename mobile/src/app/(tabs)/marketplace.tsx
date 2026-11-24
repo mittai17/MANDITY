@@ -1,8 +1,9 @@
-import {StyleSheet, View, ScrollView, Dimensions, TextInput, KeyboardAvoidingView, Platform, TouchableOpacity} from 'react-native';
+import {StyleSheet, View, ScrollView, Dimensions, TextInput, KeyboardAvoidingView, Platform, TouchableOpacity, Image} from 'react-native';
 import React, { useEffect, useState, useCallback } from 'react';
 import { useRouter } from 'expo-router';
 import { Search, Filter, Plus, MapPin, SlidersHorizontal } from 'lucide-react-native';
 import { colors, spacing, radius, typography, shadows, CROP_CATEGORIES, DEMO_MARKETS } from '../../constants/theme';
+import { getCropImageSource, getAvatarSource } from '../../constants/images';
 import { t } from '../../localization';
 import { Card, Button, Text, Heading, Caption, Skeleton, DemoLabel as DemoBadge } from '../../components/ui';
 import { api } from '../../services/api';
@@ -138,7 +139,11 @@ export default function MarketplaceScreen() {
                   <Card style={styles.listingCard} elevated={false}>
                     <DemoBadge small style={styles.demoBadge} />
                     <View style={styles.listingImage}>
-                      <View style={styles.imagePlaceholder} />
+                      <Image
+                        source={getCropImageSource(listing.crop)}
+                        style={styles.listingImageCover}
+                        resizeMode="cover"
+                      />
                     </View>
                     <View style={styles.listingInfo}>
                       <Text style={styles.listingCrop}>{listing.crop}</Text>
@@ -152,6 +157,7 @@ export default function MarketplaceScreen() {
                           <Text style={styles.listingPrice}>{listing.price}</Text>
                         </View>
                         <View style={styles.listingFarmer}>
+                          <Image source={getAvatarSource(listing.farmer)} style={styles.farmerAvatarSmall} />
                           <Text style={styles.listingFarmerName}>{listing.farmer}</Text>
                           {listing.verified && (
                             <Text style={styles.verifiedBadge}>Verified</Text>
@@ -249,10 +255,12 @@ const styles = StyleSheet.create({
     width: 90,
     height: 90,
     borderRadius: radius.lg,
+    overflow: 'hidden',
     backgroundColor: colors.ivory,
     borderWidth: 1,
     borderColor: colors.border,
   },
+  listingImageCover: { width: '100%', height: '100%' },
   imagePlaceholder: { flex: 1, backgroundColor: colors.muted, borderRadius: radius.lg },
   listingInfo: { flex: 1, gap: spacing.xs },
   listingCrop: {
@@ -289,7 +297,12 @@ const styles = StyleSheet.create({
   listingFarmer: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: spacing.sm,
+    gap: spacing.xs,
+  },
+  farmerAvatarSmall: {
+    width: 20,
+    height: 20,
+    borderRadius: radius.round,
   },
   listingFarmerName: {
     color: colors.secondaryText,

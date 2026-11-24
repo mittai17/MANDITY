@@ -1,9 +1,10 @@
-import {StyleSheet, View, ScrollView, Dimensions, TextInput, TouchableOpacity} from 'react-native';
+import {StyleSheet, View, ScrollView, Dimensions, TextInput, TouchableOpacity, Image} from 'react-native';
 import React, { useEffect, useState, useCallback } from 'react';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { ChevronRight, Clock, TrendingUp, TrendingDown, Info } from 'lucide-react-native';
 import { LineChart } from 'react-native-chart-kit';
 import { colors, spacing, radius, typography, shadows, demoLabel, DEMO_MARKETS } from '../../constants/theme';
+import { getCropImageSource } from '../../constants/images';
 import { t } from '../../localization';
 import { Card, Button, Text, Heading, Caption, DemoLabel as DemoBadge } from '../../components/ui';
 import { api } from '../../services/api';
@@ -63,7 +64,10 @@ export default function PriceDetailsScreen() {
         <TouchableOpacity style={styles.back} onPress={() => router.back()}>
           <ChevronRight size={20} color={colors.primaryText} style={{ transform: [{ rotate: '180deg' }] } as any} />
         </TouchableOpacity>
-        <Heading style={styles.title}>{cropId.charAt(0).toUpperCase() + cropId.slice(1)} Price</Heading>
+        <View style={styles.titleContainer}>
+          <Image source={getCropImageSource(cropId)} style={styles.cropTitleThumb} />
+          <Heading style={styles.title}>{cropId.charAt(0).toUpperCase() + cropId.slice(1)} Price</Heading>
+        </View>
         <DemoBadge small style={styles.demoBadge} />
       </View>
 
@@ -203,6 +207,18 @@ const styles = StyleSheet.create({
     marginBottom: spacing.lg,
   },
   back: { width: 40, height: 40, borderRadius: radius.md, backgroundColor: colors.ivory, alignItems: 'center', justifyContent: 'center' },
+  titleContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.sm,
+  },
+  cropTitleThumb: {
+    width: 36,
+    height: 36,
+    borderRadius: radius.round,
+    borderWidth: 1.5,
+    borderColor: colors.border,
+  },
   title: {
     color: colors.primaryDark,
     fontSize: typography.fontSize.xxl,

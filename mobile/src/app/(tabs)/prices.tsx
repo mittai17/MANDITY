@@ -1,8 +1,9 @@
-import {StyleSheet, View, ScrollView, Dimensions, TextInput, KeyboardAvoidingView, Platform, TouchableOpacity} from 'react-native';
+import {StyleSheet, View, ScrollView, Dimensions, TextInput, KeyboardAvoidingView, Platform, TouchableOpacity, Image} from 'react-native';
 import React, { useEffect, useState, useCallback } from 'react';
 import { useRouter } from 'expo-router';
 import { Search, Filter, ChevronRight } from 'lucide-react-native';
 import { colors, spacing, radius, typography, shadows, DEMO_MARKETS, POPULAR_CROPS } from '../../constants/theme';
+import { getCropImageSource } from '../../constants/images';
 import { t } from '../../localization';
 import { Card, Button, Text, Heading, Caption, Skeleton, DemoLabel as DemoBadge } from '../../components/ui';
 import { api } from '../../services/api';
@@ -91,9 +92,7 @@ export default function PricesScreen() {
                 >
                   <Card style={[styles.cropCard, isSelected && styles.cropCardActive]} elevated={false}>
                     <DemoBadge small style={styles.demoBadge} />
-                    <View style={styles.cropIcon}>
-                      <View style={styles.cropIconBg} />
-                    </View>
+                    <Image source={getCropImageSource(crop.id)} style={styles.cropThumb} resizeMode="cover" />
                     <Text style={[styles.cropName, isSelected && styles.cropNameActive]}>{crop.name}</Text>
                     <Caption style={[styles.cropCategory, isSelected && styles.cropCategoryActive]}>
                       {crop.category}
@@ -203,6 +202,12 @@ const styles = StyleSheet.create({
     borderColor: colors.primary,
     borderWidth: 2,
     backgroundColor: colors.primary,
+  },
+  cropThumb: {
+    width: 64,
+    height: 64,
+    borderRadius: radius.md,
+    marginBottom: spacing.xs,
   },
   cropIcon: { width: 48, height: 48, borderRadius: radius.md, backgroundColor: colors.ivory, alignItems: 'center', justifyContent: 'center', marginBottom: spacing.sm },
   cropIconBg: { width: 28, height: 28, borderRadius: radius.sm, backgroundColor: colors.limeAccent },

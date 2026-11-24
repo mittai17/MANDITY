@@ -1,8 +1,9 @@
-import {StyleSheet, View, Dimensions, ScrollView, RefreshControl, TouchableOpacity} from 'react-native';
+import { StyleSheet, View, Dimensions, ScrollView, RefreshControl, Image, TouchableOpacity } from 'react-native';
 import React, { useEffect, useState, useCallback } from 'react';
 import { useRouter } from 'expo-router';
 import { ChevronRight, Bell, Calendar, TrendingUp, TrendingDown, MapPin, BarChart2, Mic } from 'lucide-react-native';
 import { colors, spacing, radius, typography, shadows, demoLabel, POPULAR_CROPS } from '../../constants/theme';
+import { getCropImageSource, getAvatarSource } from '../../constants/images';
 import { t } from '../../localization';
 import { useAuthStore } from '../../store';
 import { Card, Button, Text, Heading, Caption, Skeleton, SkeletonText, DemoLabel as DemoBadge } from '../../components/ui';
@@ -75,7 +76,7 @@ export default function HomeScreen() {
             <Bell size={20} color={colors.primaryText} />
           </TouchableOpacity>
           <TouchableOpacity style={styles.headerButton} onPress={() => router.push('/profile')}>
-            <View style={styles.avatar} />
+            <Image source={getAvatarSource(user?.full_name)} style={styles.avatar} />
           </TouchableOpacity>
         </View>
       </View>
@@ -93,21 +94,26 @@ export default function HomeScreen() {
           <DemoBadge small />
         </View>
         <View style={styles.insightCard}>
-          <View style={styles.insightLeft}>
-            <Text style={styles.insightCrop}>{selectedCrop.charAt(0).toUpperCase() + selectedCrop.slice(1)}</Text>
-            <Text style={styles.insightSub}>Current modal mandi price</Text>
+          <View style={styles.insightTopRow}>
+            <Image source={getCropImageSource(selectedCrop)} style={styles.insightThumb} resizeMode="cover" />
+            <View style={styles.insightLeft}>
+              <Text style={styles.insightCrop}>{selectedCrop.charAt(0).toUpperCase() + selectedCrop.slice(1)}</Text>
+              <Text style={styles.insightSub}>Current modal mandi price</Text>
+            </View>
           </View>
-          <View style={styles.insightRight}>
+          <View style={styles.insightBottomRow}>
             <Text style={styles.insightPrice}>
               ₹{currentPrice?.modal_price?.toLocaleString() || '--'}
             </Text>
-            <View style={styles.insightRange}>
-              <Text style={styles.rangeLabel}>{t('min_price', language)}</Text>
-              <Text style={styles.rangeValue}>₹{currentPrice?.min_price?.toLocaleString() || '--'}</Text>
-            </View>
-            <View style={styles.insightRange}>
-              <Text style={styles.rangeLabel}>{t('max_price', language)}</Text>
-              <Text style={styles.rangeValue}>₹{currentPrice?.max_price?.toLocaleString() || '--'}</Text>
+            <View style={styles.insightRanges}>
+              <View style={styles.insightRange}>
+                <Text style={styles.rangeLabel}>{t('min_price', language)}</Text>
+                <Text style={styles.rangeValue}>₹{currentPrice?.min_price?.toLocaleString() || '--'}</Text>
+              </View>
+              <View style={styles.insightRange}>
+                <Text style={styles.rangeLabel}>{t('max_price', language)}</Text>
+                <Text style={styles.rangeValue}>₹{currentPrice?.max_price?.toLocaleString() || '--'}</Text>
+              </View>
             </View>
           </View>
         </View>
@@ -166,6 +172,7 @@ export default function HomeScreen() {
                 style={[styles.cropCard, isSelected && styles.cropCardActive]}
                 onPress={() => setSelectedCrop(crop.id)}
               >
+                <Image source={getCropImageSource(crop.id)} style={styles.cropThumb} resizeMode="cover" />
                 <Text style={[styles.cropName, isSelected && styles.cropNameActive]}>
                   {crop.name}
                 </Text>
@@ -275,12 +282,12 @@ const styles = StyleSheet.create({
     backgroundColor: colors.ivory,
     alignItems: 'center',
     justifyContent: 'center',
+    overflow: 'hidden',
   },
   avatar: {
-    width: 32,
-    height: 32,
+    width: 38,
+    height: 38,
     borderRadius: radius.round,
-    backgroundColor: colors.primary,
   },
   locationRow: {
     flexDirection: 'row',
@@ -321,9 +328,21 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primary,
     borderRadius: radius.xl,
     padding: spacing.xl,
-    gap: spacing.lg,
+    gap: spacing.md,
   },
-  insightLeft: { gap: 4 },
+  insightTopRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.md,
+  },
+  insightThumb: {
+    width: 52,
+    height: 52,
+    borderRadius: radius.md,
+    borderWidth: 2,
+    borderColor: colors.limeAccent,
+  },
+  insightLeft: { flex: 1, gap: 2 },
   insightCrop: {
     color: colors.limeAccent,
     fontSize: typography.fontSize.xs,
@@ -334,16 +353,22 @@ const styles = StyleSheet.create({
     color: 'rgba(255,255,255,0.8)',
     fontSize: typography.fontSize.sm,
   },
-  insightRight: {
+  insightBottomRow: {
     flexDirection: 'row',
-    gap: spacing.lg,
+    justifyContent: 'space-between',
+    alignItems: 'flex-end',
+    marginTop: spacing.xs,
   },
   insightPrice: {
     color: colors.white,
     fontSize: typography.fontSize.xxxl,
     fontFamily: typography.fontBold,
   },
-  insightRange: { gap: 2 },
+  insightRanges: {
+    flexDirection: 'row',
+    gap: spacing.md,
+  },
+  insightRange: { gap: 2, alignItems: 'flex-end' },
   rangeLabel: {
     color: 'rgba(255,255,255,0.7)',
     fontSize: typography.fontSize.xs,
@@ -356,7 +381,7 @@ const styles = StyleSheet.create({
   priceMovement: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: spacing.lg,
+    marginTop: spacing.md,
     gap: spacing.md,
   },
   trendRow: {
@@ -439,14 +464,20 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: colors.border,
     borderRadius: radius.lg,
-    padding: spacing.lg,
+    padding: spacing.md,
     alignItems: 'center',
-    gap: spacing.sm,
+    gap: spacing.xs,
     ...shadows.sm,
   },
   cropCardActive: {
     borderColor: colors.primary,
     backgroundColor: colors.primary,
+  },
+  cropThumb: {
+    width: 60,
+    height: 60,
+    borderRadius: radius.md,
+    marginBottom: spacing.xs,
   },
   cropName: {
     color: colors.primaryText,

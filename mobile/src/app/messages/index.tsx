@@ -1,8 +1,9 @@
-import {StyleSheet, View, ScrollView, Dimensions, TouchableOpacity} from 'react-native';
+import {StyleSheet, View, ScrollView, Dimensions, TouchableOpacity, Image} from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'expo-router';
 import { MessageCircle, Clock, ChevronRight } from 'lucide-react-native';
 import { colors, spacing, radius, typography, shadows } from '../../constants/theme';
+import { getAvatarSource } from '../../constants/images';
 import { t } from '../../localization';
 import { Card, Button, Text, Caption } from '../../components/ui';
 
@@ -53,7 +54,7 @@ export default function MessagesListScreen() {
             onPress={() => router.push(`/messages/${c.id}`)}
             activeOpacity={0.8}
           >
-            <View style={styles.avatar} />
+            <Image source={getAvatarSource(c.name)} style={styles.avatarImg} />
             <View style={styles.info}>
               <View style={styles.infoRow}>
                 <Text style={styles.name}>{c.name}</Text>
@@ -105,6 +106,14 @@ const styles = StyleSheet.create({
     height: 44,
     borderRadius: radius.round,
     backgroundColor: colors.primary,
+  },
+  avatarImg: {
+    width: 44,
+    height: 44,
+    borderRadius: radius.round,
+    borderWidth: 1.5,
+    borderColor: colors.border,
+    marginRight: spacing.md,
   },
   info: { flex: 1, gap: 4 },
   infoRow: { flexDirection: 'row', justifyContent: 'space-between' },

@@ -1,8 +1,9 @@
-import { StyleSheet, View, ScrollView, Dimensions, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, ScrollView, Dimensions, TouchableOpacity, Image } from 'react-native';
 import React, { useState } from 'react';
 import { useRouter } from 'expo-router';
 import { Menu, Edit, Bell, LogOut, ArrowRight, Check } from 'lucide-react-native';
 import { colors, spacing, radius, typography, shadows, LANGUAGES } from '../../constants/theme';
+import { getAvatarSource } from '../../constants/images';
 import { t } from '../../localization';
 import { useAuthStore } from '../../store';
 import { Card, Button, Text, Caption } from '../../components/ui';
@@ -22,7 +23,7 @@ export default function ProfileScreen() {
     <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 100 }}>
       <View style={styles.header}>
         <View style={styles.avatar}>
-          <View style={styles.avatarBg} />
+          <Image source={getAvatarSource(user?.full_name)} style={styles.avatarImg} />
         </View>
         <View style={styles.profileInfo}>
           <Text style={styles.profileName}>{user?.full_name || 'Demo Farmer'}</Text>
@@ -126,7 +127,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderWidth: 2,
     borderColor: colors.border,
+    overflow: 'hidden',
   },
+  avatarImg: { width: 76, height: 76, borderRadius: radius.round },
   avatarBg: { width: 56, height: 56, borderRadius: radius.round, backgroundColor: colors.primary },
   profileInfo: { gap: 4 },
   profileName: {

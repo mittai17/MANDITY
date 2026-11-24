@@ -1,8 +1,9 @@
-import {StyleSheet, View, ScrollView, Dimensions, TextInput, TouchableOpacity} from 'react-native';
+import {StyleSheet, View, ScrollView, Dimensions, TextInput, TouchableOpacity, Image} from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { ChevronRight, MapPin, Phone, MessageCircle, Share2, MoreVertical } from 'lucide-react-native';
 import { colors, spacing, radius, typography, shadows } from '../../constants/theme';
+import { getCropImageSource, getAvatarSource } from '../../constants/images';
 import { t } from '../../localization';
 import { Card, Button, Text, Heading, Caption, DemoLabel as DemoBadge } from '../../components/ui';
 import { useAuthStore } from '../../store';
@@ -40,11 +41,11 @@ export default function ListingDetailScreen() {
       </View>
 
       <View style={styles.images}>
-        {listing.images.map((uri, i) => (
-          <View key={i} style={styles.imageItem}>
-            <View style={styles.imagePlaceholder} />
-          </View>
-        ))}
+        <Image
+          source={getCropImageSource(listing.crop)}
+          style={styles.heroImage}
+          resizeMode="cover"
+        />
       </View>
 
       <DemoBadge small style={styles.demoBadge} />
@@ -72,7 +73,7 @@ export default function ListingDetailScreen() {
 
         <View style={styles.farmerSection}>
           <View style={styles.farmerHeader}>
-            <View style={styles.farmerAvatar} />
+            <Image source={getAvatarSource(listing.farmer)} style={styles.farmerAvatarImg} />
             <View style={styles.farmerInfo}>
               <Text style={styles.farmerName}>{listing.farmer}</Text>
               <Caption style={styles.farmerLocation}>{listing.location}</Caption>
@@ -111,7 +112,10 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 220,
     backgroundColor: colors.ivory,
-    flexDirection: 'row',
+  },
+  heroImage: {
+    width: '100%',
+    height: '100%',
   },
   imageItem: {
     flex: 1,
@@ -189,6 +193,13 @@ const styles = StyleSheet.create({
     height: 44,
     borderRadius: radius.round,
     backgroundColor: colors.primary,
+  },
+  farmerAvatarImg: {
+    width: 48,
+    height: 48,
+    borderRadius: radius.round,
+    borderWidth: 1.5,
+    borderColor: colors.border,
   },
   farmerInfo: { gap: 2 },
   farmerName: {

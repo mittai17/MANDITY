@@ -3,6 +3,7 @@ import React, { useState, useCallback } from 'react';
 import { useRouter } from 'expo-router';
 import { ChevronRight, X, Plus, Camera, MapPin } from 'lucide-react-native';
 import { colors, spacing, radius, typography, shadows, UNITS } from '../constants/theme';
+import { getCropImageSource } from '../constants/images';
 import { t } from '../localization';
 import { Card, Button, Text, Heading, Caption, DemoLabel as DemoBadge } from '../components/ui';
 import { useAuthStore } from '../store';
@@ -103,6 +104,7 @@ export default function SellScreen() {
                     style={[styles.cropChip, crop === c && styles.cropChipActive]}
                     onPress={() => setCrop(c)}
                   >
+                    <RnImage source={getCropImageSource(c)} style={styles.cropChipImg} />
                     <Text style={[styles.cropLabel, crop === c && styles.cropLabelActive]}>{c}</Text>
                   </TouchableOpacity>
                 ))}
@@ -191,6 +193,13 @@ export default function SellScreen() {
           )}
           {step.key === 'review' && (
             <View style={styles.reviewSection}>
+              <View style={styles.reviewCropCard}>
+                <RnImage source={getCropImageSource(crop)} style={styles.reviewCropImg} />
+                <View style={{ flex: 1 }}>
+                  <Text style={styles.reviewCropTitle}>{crop}</Text>
+                  <Caption>{quantity || '0'} {unit} • ₹{price || '0'}/{unit}</Caption>
+                </View>
+              </View>
               <View style={styles.reviewRow}>
                 <Text style={styles.reviewLabel}>Crop</Text>
                 <Text style={styles.reviewValue}>{crop}</Text>
@@ -269,12 +278,20 @@ const styles = StyleSheet.create({
     gap: spacing.md,
   },
   cropChip: {
-    paddingHorizontal: spacing.lg,
-    paddingVertical: spacing.md,
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.sm,
     backgroundColor: colors.white,
     borderWidth: 1,
     borderColor: colors.border,
     borderRadius: radius.round,
+  },
+  cropChipImg: {
+    width: 26,
+    height: 26,
+    borderRadius: radius.round,
+    marginRight: spacing.xs,
   },
   cropChipActive: {
     backgroundColor: colors.primary,
@@ -286,6 +303,27 @@ const styles = StyleSheet.create({
     fontFamily: typography.fontMedium,
   },
   cropLabelActive: { color: colors.white },
+  reviewCropCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.md,
+    backgroundColor: colors.white,
+    padding: spacing.md,
+    borderRadius: radius.lg,
+    borderWidth: 1,
+    borderColor: colors.border,
+    marginBottom: spacing.md,
+  },
+  reviewCropImg: {
+    width: 54,
+    height: 54,
+    borderRadius: radius.md,
+  },
+  reviewCropTitle: {
+    color: colors.primaryDark,
+    fontSize: typography.fontSize.lg,
+    fontFamily: typography.fontBold,
+  },
   photoSection: { gap: spacing.md },
   photoGrid: {
     flexDirection: 'row',

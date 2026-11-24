@@ -8,13 +8,13 @@ export const api = {
   async getCrops(): Promise<Crop[]> {
     await DELAY(300);
     return [
-      { id: 'tomato', name: 'Tomato', category: 'Vegetables', image_url: '', local_names: {}, is_active: true },
-      { id: 'onion', name: 'Onion', category: 'Vegetables', image_url: '', local_names: {}, is_active: true },
-      { id: 'paddy', name: 'Paddy', category: 'Grains', image_url: '', local_names: {}, is_active: true },
-      { id: 'groundnut', name: 'Groundnut', category: 'Oilseeds', image_url: '', local_names: {}, is_active: true },
-      { id: 'coconut', name: 'Coconut', category: 'Fruits', image_url: '', local_names: {}, is_active: true },
-      { id: 'banana', name: 'Banana', category: 'Fruits', image_url: '', local_names: {}, is_active: true },
-      { id: 'potato', name: 'Potato', category: 'Vegetables', image_url: '', local_names: {}, is_active: true },
+      { id: 'tomato', name: 'Tomato', category: 'Vegetables', image_url: 'https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=400&q=80', local_names: {}, is_active: true },
+      { id: 'onion', name: 'Onion', category: 'Vegetables', image_url: 'https://images.unsplash.com/photo-1618512496248-a07fe83aa8cb?auto=format&fit=crop&w=400&q=80', local_names: {}, is_active: true },
+      { id: 'paddy', name: 'Paddy', category: 'Grains', image_url: 'https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=400&q=80', local_names: {}, is_active: true },
+      { id: 'groundnut', name: 'Groundnut', category: 'Oilseeds', image_url: 'https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=400&q=80', local_names: {}, is_active: true },
+      { id: 'coconut', name: 'Coconut', category: 'Fruits', image_url: 'https://images.unsplash.com/photo-1544376798-89aa6b82c6cd?auto=format&fit=crop&w=400&q=80', local_names: {}, is_active: true },
+      { id: 'banana', name: 'Banana', category: 'Fruits', image_url: 'https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?auto=format&fit=crop&w=400&q=80', local_names: {}, is_active: true },
+      { id: 'potato', name: 'Potato', category: 'Vegetables', image_url: 'https://images.unsplash.com/photo-1518977676601-b53f82aba655?auto=format&fit=crop&w=400&q=80', local_names: {}, is_active: true },
     ];
   },
 
